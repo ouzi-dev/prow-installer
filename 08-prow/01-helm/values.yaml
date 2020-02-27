@@ -1,0 +1,31 @@
+prowbucketname: {{ .prow.prowbucketname }}
+podNamespace: {{ .prow.namespaceforjobs }}
+secrets:
+  slackToken: slack-token
+  githubToken: github-token
+  oauthConfig: oauth-config
+  bucketGcsCredentials: prow-bucket-gcs-credentials
+
+deck:
+  ingress:
+    host: prow.{{ .global.basedomain }}
+    annotations:
+      nginx.ingress.kubernetes.io/auth-url: "https://oauth2.{{ .global.basedomain }}/oauth2/auth"
+      nginx.ingress.kubernetes.io/auth-signin: "https://oauth2.{{ .global.basedomain }}/oauth2/start?rd=/redirect/$http_host$request_uri"
+
+hook:
+  ingress:
+    host: prow.{{ .global.basedomain }}
+
+github:
+  org: {{ .global.github.org }}
+  bot:
+    username: {{ .global.github.bot.username }}
+
+ghproxy:
+  cache:
+    sizeGB: 19
+    storageClassName: ssd-retain
+
+monitoring:
+  enabled: true 

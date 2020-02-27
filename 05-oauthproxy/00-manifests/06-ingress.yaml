@@ -1,0 +1,23 @@
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+    kubernetes.io/ingress.class: nginx
+  name: oauth2-proxy
+  namespace: {{ .oauthproxy.namespace }}
+spec:
+  rules:
+  - host: oauth2.{{ .global.basedomain }}
+    http:
+      paths:
+      - backend:
+          serviceName: oauth2-proxy
+          servicePort: http
+        path: /
+  tls:
+    - hosts:
+      - oauth2.{{ .global.basedomain }}
+      secretName: oauth-tls

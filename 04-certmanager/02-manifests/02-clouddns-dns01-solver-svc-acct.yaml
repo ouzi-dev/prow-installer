@@ -1,0 +1,14 @@
+---
+apiVersion: credstash.ouzi.tech/v1alpha1
+kind: CredstashSecret
+metadata:
+  name: clouddns-dns01-solver-svc-acct
+  namespace: {{ .certmanager.namespace }}
+  labels: 
+    operatorInstance: system
+spec:
+  secrets:
+  - name: key.json
+    key: {{ .certmanager.svcaccount.credstash.key | quote }}
+    table: {{ .certmanager.svcaccount.credstash.table | quote }}
+    version: {{ .certmanager.svcaccount.credstash.version | quote }}

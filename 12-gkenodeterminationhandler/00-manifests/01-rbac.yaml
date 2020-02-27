@@ -1,0 +1,46 @@
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  labels:
+    k8s-app: node-termination-handler
+  name: node-termination-handler
+  namespace: {{ .gkenodeterminationhandler.namespace }}
+
+---
+kind: ClusterRole
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  labels:
+    k8s-app: node-termination-handler
+  name: node-termination-handler
+rules:
+  # Allow Node Termination Handler to get and update nodes (for posting taints).
+- apiGroups: [""]
+  resources: ["nodes"]
+  verbs: ["get", "update"]
+  # Allow Node Termination Handler to create events
+- apiGroups: [""]
+  resources: ["events"]
+  verbs: ["create"]
+  # Allow Node Termination Handler to list and delete pods (for draining nodes)
+- apiGroups: [""]
+  resources: ["pods"]
+  verbs: ["get", "list", "delete"]
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: node-termination-handler
+  namespace: {{ .gkenodeterminationhandler.namespace }}
+  labels:
+    k8s-app: node-termination-handler
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: node-termination-handler
+subjects:
+- kind: ServiceAccount
+  name: node-termination-handler
+  namespace: {{ .gkenodeterminationhandler.namespace }}

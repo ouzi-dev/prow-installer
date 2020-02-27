@@ -1,0 +1,9 @@
+externaldns:
+  namespace: external-dns
+  helm:
+    # The name of the Release
+    name: onion
+    # The chart's name - can also be a URL
+    chart: stable/external-dns
+    # If using a registry, specify the version. If the chart is a URL, the version is ignored
+    version: 2.10.0

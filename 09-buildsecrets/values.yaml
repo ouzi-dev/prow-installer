@@ -1,0 +1,2 @@
+buildsecrets:
+  namespaceforjobs: prow-test-pods
