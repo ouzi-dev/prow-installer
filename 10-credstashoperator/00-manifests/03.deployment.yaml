@@ -1,20 +1,22 @@
 {{ $root := . -}}
-{{ range .credstashoperator.instances -}}
+{{- range $key, $value := .credstashoperator.instances }}
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: credstash-operator
+  name: credstash-operator-{{ $key }}
   namespace: {{ $root.credstashoperator.namespace }}
 spec:
   replicas: 1
   selector:
     matchLabels:
       name: credstash-operator
+      operatorInstance: {{ $key }}
   template:
     metadata:
       labels:
         name: credstash-operator
+        operatorInstance: {{ $key }}
     spec:
       serviceAccountName: credstash-operator
       containers:
@@ -23,11 +25,11 @@ spec:
           command:
             - credstash-operator
           args:
-            - --selector-label={{ .name }}
+            - --selector-label={{ $key }}
           imagePullPolicy: Always
           envFrom:
             - secretRef:
-                name: aws-credentials-{{ .name }}
+                name: aws-credentials-{{ $key }}
           env:
             - name: POD_NAME
               valueFrom:

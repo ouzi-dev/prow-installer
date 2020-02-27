@@ -155,7 +155,7 @@ buildsecrets:
 # # Credstash Operator that will allow you to fetch secrets from Credstash
 credstashoperator:
   instances:
-    - name: system
+    system:
       aws:
         region: eu-west-2
         accessid: 1234567890
