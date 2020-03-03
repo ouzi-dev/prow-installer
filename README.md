@@ -1,4 +1,33 @@
-# prow-installer
+# prow-installer <!-- omit in toc -->
+
+- [Overview](#overview)
+- [Packages](#packages)
+- [How to deploy all components](#how-to-deploy-all-components)
+- [How to deploy a specific component](#how-to-deploy-a-specific-component)
+- [How does this work ?](#how-does-this-work-)
+  - [What is a Package](#what-is-a-package)
+  - [How is the Package deployed](#how-is-the-package-deployed)
+
+## Overview
+
+In order to get Prow up and running on a vanilla GKE Kubernetes cluster one has to install various components. This installer installs everything needed to get a self sustaining Prow installation in a vanilla GKE cluster.
+
+## Packages
+
+The installer will deploy the following packages:
+
+| Package | Notes  | Docs   |
+| ------- | ------ | ------ | 
+| [bootstrap](packages/00-bootstrap/) | contains cluster role bindings for the admin group, storage classes and pod disruption budgets for the smooth operation of the GKE AutoScaler | [link]() |
+| [gke preemptible killer](packages/11-gkepreemptiblekiller) | kills the [GKE preemptible](https://cloud.google.com/kubernetes-engine/docs/how-to/preemptible-vms) nodes before Google reclaims them. This means that instances get recycled every 12 hours or thereabouts | [link](https://github.com/estafette/estafette-gke-preemptible-killer) |
+| [gke node termination handler](packages/12-gkenodeterminationhandler) | watches for a signal from GKE that the node is being killed and gracefully terminates pods on the nodes in question | [link](https://github.com/GoogleCloudPlatform/k8s-node-termination-handler) |
+| [credstashoperator](packages/10-credstashoperator) | allows us to have CredstashSecrets and use them for builds | [link](https://github.com/ouzi-dev/credstash-operator) |
+| [cert-manager](packages/04-certmanager) | creates and manages TLS certificates for all ingress and external services | [link](https://github.com/jetstack/cert-manager) |
+| [oauthproxy](packages/05-oauthproxy) | provides authN to ingress using GitHub OAuth app | [link](https://github.com/pusher/oauth2_proxy) |
+| [externaldns](packages/06-externaldns) | manages DNS records from ingress | [link](https://github.com/kubernetes-sigs/external-dns) |
+| [nginxingress](packages/07-nginxingress) | manages an nginx cluster for all ingress' in the cluster | [link](https://github.com/kubernetes/ingress-nginx) |
+| [prow](packages/08-prow) | creates all prow components in the cluster | [link](https://github.com/ouzi-dev/prow-helm-chart) |
+| [buildsecrets](packages/09-buildsecrets) | creates CredstashSecrets for builds | [link](https://github.com/ouzi-dev/credstash-operator)
 
 ## How to deploy all components
 
