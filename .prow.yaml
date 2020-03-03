@@ -1,16 +1,16 @@
 presubmits:
-  - name: package
-    context: package
+  - name: test-package
+    context: test-package
     decorate: true
     always_run: true
     skip_report: false
     clone_uri: "git@github.com:ouzi-dev/prow-installer.git"
     max_concurrency: 1
-    trigger: "(?m)package( please)?"
-    rerun_command: "package"
+    trigger: "(?m)test-package( please)?"
+    rerun_command: "test-package"
     spec:
       containers:
-        - name: "package"
+        - name: "test-package"
           imagePullPolicy: IfNotPresent
           image: quay.io/ouzi/toolbox:0.1.13
           command:
