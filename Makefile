@@ -33,7 +33,7 @@ package:
 	@tar -zcf $(RELEASE) packages/ Makefile install.mk LICENSE
 	@echo Creating package...Done $(RELEASE)
 
-	.PHONY: semantic-release
+.PHONY: semantic-release
 semantic-release:
 	npm ci
 	npx semantic-release
