@@ -9,6 +9,7 @@ global:
     org: ouzi-dev
     bot:
       username: ouzibot
+
 # Cert-Manager settings 
 certmanager:
   svcaccount:
@@ -32,6 +33,23 @@ oauthproxy:
   cookiesecret:
     credstash:
       key: prow-cluster-github-oauth-cookie-secret
+      table: credential-store
+      version: "0000000000000000001"
+
+# Credstash Operator that will allow you to fetch secrets from Credstash
+credstashoperator:
+  instances:
+    system:
+      aws:
+        region: eu-west-2
+        accessid: 1234567890
+        secretaccesskey: topsecret
+
+# GKE PreEmptible Killer Settings
+gkepreemptiblekiller:
+  svcaccount:
+    credstash:
+      key: prow-gke-preemptible-killer-svc-account-key
       table: credential-store
       version: "0000000000000000001"
 
@@ -67,7 +85,7 @@ prow:
         table: credential-store
         version: "0000000000000000001"
 
-
+# Build Secrets
 buildsecrets:
   credstashsecrets:
     - name: gcs-credentials
@@ -150,21 +168,3 @@ buildsecrets:
         key: prow_4leaf_secret_access_key
         table: singularity
         version: "0000000000000000001"
-
-
-# # Credstash Operator that will allow you to fetch secrets from Credstash
-credstashoperator:
-  instances:
-    system:
-      aws:
-        region: eu-west-2
-        accessid: 1234567890
-        secretaccesskey: topsecret
-
-# GKE PreEmptible Killer Settings
-gkepreemptiblekiller:
-  svcaccount:
-    credstash:
-      key: prow-gke-preemptible-killer-svc-account-key
-      table: credential-store
-      version: "0000000000000000001"

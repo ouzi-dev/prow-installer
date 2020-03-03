@@ -1,0 +1,57 @@
+presubmits:
+  - name: package
+    context: package
+    decorate: true
+    always_run: true
+    skip_report: false
+    clone_uri: "git@github.com:ouzi-dev/prow-installer.git"
+    max_concurrency: 1
+    trigger: "(?m)package( please)?"
+    rerun_command: "package"
+    spec:
+      containers:
+        - name: "package"
+          imagePullPolicy: IfNotPresent
+          image: quay.io/ouzi/toolbox:0.1.13
+          command:
+            - make
+          args:
+            - package
+  - name: test-semrelease-dryrun
+    context: test-semrelease-dryrun
+    decorate: true
+    always_run: true
+    skip_report: false
+    clone_uri: "git@github.com:ouzi-dev/prow-installer.git"
+    max_concurrency: 1
+    labels:
+      preset-semantic-release: "true"
+    trigger: "(?m)semrelease-dryrun( please)?"
+    rerun_command: "semrelease-dryrun"
+    spec:
+      containers:
+        - name: "test-semrelease-dryrun"
+          imagePullPolicy: IfNotPresent
+          image: quay.io/ouzi/toolbox:0.1.2
+          command:
+            - make
+          args:
+            - semantic-release-dry-run
+postsubmits:
+  - name: prow-installer-release
+    labels:
+      preset-semantic-release: "true"
+    clone_uri: "git@github.com:ouzi-dev/prow-installer.git"
+    decorate: true
+    max_concurrency: 1
+    branches:
+      - master
+    spec:
+      containers:
+        - name: "release"
+          imagePullPolicy: Always
+          image: quay.io/ouzi/toolbox:0.1.13
+          command:
+            - make
+          args:
+            - semantic-release

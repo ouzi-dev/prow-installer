@@ -1,4 +1,5 @@
 DRY_RUN ?= true
+VALUES ?= values.yaml
 
 SHELL = /bin/bash -eo pipefail
 
@@ -41,13 +42,13 @@ endif
 install-manifests-gotpl:
 	@gotpl \
 	$(FOLDER)/values.yaml \
-	--values values.yaml \
+	--values $(VALUES) \
 	--strict > $(FOLDER)/.values.yaml
 ifeq ($(DRY_RUN),true)
 	@echo **Applying $(FOLDER)/${SUBFOLDER} \(Dry Run\)
 	@gotpl \
 		$(FOLDER)/${SUBFOLDER} \
-		--values values.yaml \
+		--values $(VALUES) \
 		--values $(FOLDER)/.values.yaml \
 		--strict \
 		$(EXTRA_ARGS) \
@@ -56,7 +57,7 @@ else
 	@echo **Applying $(FOLDER)/${SUBFOLDER}
 	@gotpl \
 		$(FOLDER)/${SUBFOLDER} \
-		--values values.yaml \
+		--values $(VALUES) \
 		--values $(FOLDER)/.values.yaml \
 		--strict \
 		$(EXTRA_ARGS) \
@@ -68,7 +69,7 @@ endif
 install-helm-chart:
 	@gotpl \
 	$(FOLDER)/${SUBFOLDER}/values.yaml \
-	--values values.yaml \
+	--values $(VALUES) \
 	--values $(FOLDER)/values.yaml \
 	--strict > $(FOLDER)/${SUBFOLDER}/.values.yaml
 ifeq ($(DRY_RUN),true)
@@ -100,7 +101,7 @@ endif
 install-helm-chart-url:
 	@gotpl \
 	$(FOLDER)/${SUBFOLDER}/values.yaml \
-	--values values.yaml \
+	--values $(VALUES) \
 	--values $(FOLDER)/values.yaml \
 	--strict > $(FOLDER)/${SUBFOLDER}/.values.yaml
 ifeq ($(DRY_RUN),true)
