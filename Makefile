@@ -30,7 +30,7 @@ deploy: $(addsuffix -deploy,$($*DIRECTORY:/=))
 package: 
 	@echo Creating package...
 	@mkdir -p $(DIST_DIR)
-	@tar -zcf $(RELEASE) packages/ Makefile install.mk
+	@tar -zcf $(RELEASE) packages/ Makefile install.mk LICENSE
 	@echo Creating package...Done $(RELEASE)
 
 	.PHONY: semantic-release
