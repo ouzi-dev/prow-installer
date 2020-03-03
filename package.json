@@ -55,7 +55,7 @@
         {
           "assets": [
             {
-              "path": "dist/*.whl"
+              "path": ".dist/*"
             }
           ],
           "successComment": "This ${issue.pull_request ? 'pull request' : 'issue'} is included in version ${nextRelease.version}",
