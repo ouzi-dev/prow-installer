@@ -1,6 +1,7 @@
 # prow-installer <!-- omit in toc -->
 
 - [Overview](#overview)
+- [Why](#why)
 - [Packages](#packages)
 - [How to deploy all components](#how-to-deploy-all-components)
 - [How to deploy a specific component](#how-to-deploy-a-specific-component)
@@ -9,6 +10,10 @@
   - [How is the Package deployed](#how-is-the-package-deployed)
 
 ## Overview
+
+Installs Prow and all components needed to support in on a GKE Kubernetes Cluster.
+
+## Why 
 
 In order to get Prow up and running on a vanilla GKE Kubernetes cluster one has to install various components. This installer installs everything needed to get a self sustaining Prow installation in a vanilla GKE cluster.
 
