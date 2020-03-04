@@ -43,6 +43,7 @@ install-manifests-gotpl:
 	@gotpl \
 	$(FOLDER)/values.yaml \
 	--values $(VALUES) \
+	$(SET_VALUES) \
 	--strict > $(FOLDER)/.values.yaml
 ifeq ($(DRY_RUN),true)
 	@echo **Applying $(FOLDER)/${SUBFOLDER} \(Dry Run\)
@@ -50,6 +51,7 @@ ifeq ($(DRY_RUN),true)
 		$(FOLDER)/${SUBFOLDER} \
 		--values $(VALUES) \
 		--values $(FOLDER)/.values.yaml \
+		$(SET_VALUES) \
 		--strict \
 		$(EXTRA_ARGS) \
 		| kubectl apply --dry-run $(KUBECTL_ARGS) -f -
@@ -59,6 +61,7 @@ else
 		$(FOLDER)/${SUBFOLDER} \
 		--values $(VALUES) \
 		--values $(FOLDER)/.values.yaml \
+		$(SET_VALUES) \
 		--strict \
 		$(EXTRA_ARGS) \
 		| kubectl apply $(KUBECTL_ARGS) -f -
@@ -71,6 +74,7 @@ install-helm-chart:
 	$(FOLDER)/${SUBFOLDER}/values.yaml \
 	--values $(VALUES) \
 	--values $(FOLDER)/values.yaml \
+	$(SET_VALUES) \
 	--strict > $(FOLDER)/${SUBFOLDER}/.values.yaml
 ifeq ($(DRY_RUN),true)
 	@echo **Upgrading \(Dry Run\) helm chart $(CHART) $(NAME) $(VERSION) from $(FOLDER)/$(SUBFOLDER) in $(NAMESPACE)
@@ -82,6 +86,7 @@ ifeq ($(DRY_RUN),true)
 		--namespace $(NAMESPACE) \
 		--allow-unreleased \
 		$(HELM_EXTRA_ARGS) \
+		$(SET_VALUES) \
 		--values $(FOLDER)/$(SUBFOLDER)/.values.yaml
 else
 	@echo **Upgrading helm chart $(CHART) $(NAME) $(VERSION) from $(FOLDER)/$(SUBFOLDER) in $(NAMESPACE)
@@ -93,6 +98,7 @@ else
 		--wait \
 		--namespace $(NAMESPACE) \
 		$(HELM_EXTRA_ARGS) \
+		$(SET_VALUES) \
 		--values $(FOLDER)/$(SUBFOLDER)/.values.yaml
 endif
 	@rm $(FOLDER)/$(SUBFOLDER)/.values.yaml
@@ -103,6 +109,7 @@ install-helm-chart-url:
 	$(FOLDER)/${SUBFOLDER}/values.yaml \
 	--values $(VALUES) \
 	--values $(FOLDER)/values.yaml \
+	$(SET_VALUES) \
 	--strict > $(FOLDER)/${SUBFOLDER}/.values.yaml
 ifeq ($(DRY_RUN),true)
 	@echo **Upgrading \(Dry Run\) helm chart $(CHART) $(NAME) $(VERSION) from $(FOLDER)/$(SUBFOLDER) in $(NAMESPACE)
@@ -113,6 +120,7 @@ ifeq ($(DRY_RUN),true)
 		--namespace $(NAMESPACE) \
 		--allow-unreleased \
 		$(HELM_EXTRA_ARGS) \
+		$(SET_VALUES) \
 		--values $(FOLDER)/$(SUBFOLDER)/.values.yaml 		
 else
 	@echo **Upgrading helm chart $(CHART) $(NAME) $(VERSION) from $(FOLDER)/$(SUBFOLDER) in $(NAMESPACE)
@@ -123,6 +131,7 @@ else
 		--wait \
 		--namespace $(NAMESPACE) \
 		$(HELM_EXTRA_ARGS) \
+		$(SET_VALUES) \
 		--values $(FOLDER)/$(SUBFOLDER)/.values.yaml 	
 endif
 	@rm $(FOLDER)/$(SUBFOLDER)/.values.yaml 

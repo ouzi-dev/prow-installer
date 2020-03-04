@@ -25,7 +25,7 @@ deploy: $(addsuffix -deploy,$($*DIRECTORY:/=))
 .PHONY: %-deploy
 %-deploy:
 	@echo "*Deploying package $*"
-	@$(MAKE) FOLDER=packages/$* VALUES=$(VALUES) install
+	@$(MAKE) FOLDER=packages/$* VALUES=$(VALUES) SET_VALUES=$(SET_VALUES) install
 
 package: 
 	@echo Creating package...
