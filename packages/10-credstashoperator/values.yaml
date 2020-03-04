@@ -1,3 +1,3 @@
 credstashoperator:
   namespace: credstash-operator
-  image: quay.io/ouzi/credstash-operator:v0.0.1
+  image: quay.io/ouzi/credstash-operator:v1.8.6
