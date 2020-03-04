@@ -8,6 +8,8 @@ metadata:
   namespace: {{ $root.credstashoperator.namespace }}
 spec:
   replicas: 1
+  strategy:
+    type: Recreate
   selector:
     matchLabels:
       name: credstash-operator
@@ -36,5 +38,27 @@ spec:
                 fieldRef:
                   fieldPath: metadata.name
             - name: OPERATOR_NAME
-              value: "credstash-operator"
+              value: "credstash-operator-{{ $key }}"
+            - name: SERVICE_MONITOR_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: http
+          readinessProbe:
+            httpGet:
+              path: /readyz
+              port: http
+          ports:
+            - name: http
+              containerPort: 8080
+              protocol: TCP
+            - name: http-metrics
+              containerPort: 8383
+              protocol: TCP
+            - name: cr-metrics
+              containerPort: 8686
+              protocol: TCP
 {{ end }}
