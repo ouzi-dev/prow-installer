@@ -2,6 +2,7 @@
 
 - [Overview](#overview)
 - [Why](#why)
+- [Features](#features)
 - [Packages](#packages)
 - [How to deploy all components](#how-to-deploy-all-components)
 - [How to deploy a specific component](#how-to-deploy-a-specific-component)
@@ -16,6 +17,20 @@ Installs Prow and all components needed to support in on a GKE Kubernetes Cluste
 ## Why 
 
 In order to get Prow up and running on a vanilla GKE Kubernetes cluster one has to install various components. This installer installs everything needed to get a self sustaining Prow installation in a vanilla GKE cluster.
+
+## Features
+
+* PodDisruptionBudgets for all GKE system components such that the AutoScaler works nicely.
+* Drain GKE Preemptible Nodes before GKE takes them away to minimize disruption
+  * This means that all Preemptible nodes get recycled every 12-16 hours. 
+* Handle Node Termination signals from GKE
+  * When GKE sends a SIGTERM to a node, the controller makes sure the node starts draining gracefully to minimize disruption
+* Fetches CredStash Secrets and injects them in the prow and build namespaces
+* Create/Renew TLS Certificates via cert-manager
+* authN's the prow dashboard and other ingress' using GitHub OAuth
+* Create/Update DNS Records using external-dns
+* Provide Ingress using the nginx-ingress-controller
+* Manages Prow and all of its components
 
 ## Packages
 
