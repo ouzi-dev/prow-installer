@@ -72,7 +72,7 @@ A package is effectively a folder called `number-packagename` where number is us
     name: peach
     # The chart's name - can also be a URL
     chart: stable/nginx-ingress
-    # If using a registry, specify the version. If the chart is a URL, the version is ignored
+    # If using a registry, specify the version. If the chart is a URL, set the version to null
     version: 1.24.4
   ```
 - `00-manifests` : 
