@@ -6,5 +6,5 @@ prow:
     name: raspberry
     # The chart's name - can also be a URL
     chart: https://github.com/ouzi-dev/prow-helm-chart/releases/download/v0.6.5/prow-v0.6.5.tgz 
-    # If using a registry, specify the version. If the chart is a URL, the version is ignored
-    version:
+    # If using a registry, specify the version. If the chart is a URL, set the version to null
+    version: null
