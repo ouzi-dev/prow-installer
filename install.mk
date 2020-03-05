@@ -1,7 +1,7 @@
 DRY_RUN ?= true
 VALUES ?= values.yaml
 
-SHELL = /bin/bash -eo pipefail
+SHELL = /usr/bin/env bash -eo pipefail
 
 .PHONY: install
 install:
@@ -12,7 +12,7 @@ ifneq ($(wildcard $(FOLDER)/00-manifests/.*),)
 					install-manifests-gotpl
 endif
 ifneq ($(wildcard $(FOLDER)/01-helm/.*),)
-	@if [[ $(call get_package_value,helm.version) = null ]]; then \
+	if [[ "$(call get_package_value,helm.version)" == "null" ]]; then \
 		$(MAKE) \
 						FOLDER=$(FOLDER) \
 						NAME=$(call get_package_value,helm.name) \
