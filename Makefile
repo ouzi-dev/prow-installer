@@ -1,7 +1,7 @@
 include install.mk
 
 DRY_RUN ?= true
-DIRECTORY = $(notdir $(wildcard packages/*))
+DIRECTORY = $(notdir $(sort $(wildcard packages/*)))
 VALUES ?= values.yaml
 
 DIST_DIR = .dist/
