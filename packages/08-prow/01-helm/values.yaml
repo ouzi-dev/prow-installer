@@ -1,7 +1,7 @@
 prowbucketname: {{ .prow.prowbucketname }}
 podNamespace: {{ .prow.namespaceforjobs }}
 secrets:
-{{ if prow.slack.token }}
+{{ if .prow.slack.token }}
   slackToken: slack-token
 {{ end }}
   githubToken: github-token
