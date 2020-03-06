@@ -1,7 +1,9 @@
 prowbucketname: {{ .prow.prowbucketname }}
 podNamespace: {{ .prow.namespaceforjobs }}
 secrets:
+{{ if prow.slack.token }}
   slackToken: slack-token
+{{ end }}
   githubToken: github-token
   oauthConfig: oauth-config
   bucketGcsCredentials: prow-bucket-gcs-credentials
