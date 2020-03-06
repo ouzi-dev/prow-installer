@@ -6,4 +6,4 @@ certmanager:
     # The chart's name - can also be a URL
     chart: jetstack/cert-manager
     # If using a registry, specify the version. If the chart is a URL, set the version to null
-    version: v0.11.0
+    version: v0.13.1
