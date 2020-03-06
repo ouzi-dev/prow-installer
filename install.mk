@@ -6,47 +6,47 @@ SHELL = /usr/bin/env bash -eo pipefail
 # We need bash version 5 and above
 BASH_MIN_MAJOR_VERSION = 5
 ifeq ($(shell test $$BASH_VERSINFO -lt $(BASH_MIN_MAJOR_VERSION); echo $$?),0)
-$(error Requires bash version 5 and above)
+$(error Requires bash version $(BASH_MIN_MAJOR_VERSION) and above)
 endif
 
 # We need helm version 3 and above
 HELM_MIN_MAJOR_ERSION = 3
 ifeq ($(shell test $(shell helm version --short | cut -d'+' -f1 | tr -d v | cut -d'.' -f1) -lt $(HELM_MIN_MAJOR_ERSION); echo $$?),0)
-$(error Requires helm version 3 and above)
+$(error Requires helm version $(HELM_MIN_MAJOR_ERSION) and above)
 endif
 
 # We need yq version 3 and above
 YQ_MIN_MAJOR_VERSION = 3
 ifeq ($(shell test $(shell yq --version | cut -d' ' -f3 | cut -d'.' -f1) -lt $(YQ_MIN_MAJOR_VERSION); echo $$?),0)
-$(error Requires yq version 3 and above)
+$(error Requires yq version $(YQ_MIN_MAJOR_VERSION) and above)
 endif
 
 .PHONY: install
 install:
 ifneq ($(wildcard $(FOLDER)/00-manifests/.*),)
 	@$(MAKE) \
-					FOLDER=$(FOLDER) \
-					SUBFOLDER=00-manifests \
-					install-manifests-gotpl
+		FOLDER=$(FOLDER) \
+		SUBFOLDER=00-manifests \
+		install-manifests-gotpl
 endif
 ifneq ($(wildcard $(FOLDER)/01-helm/.*),)
 	@if [[ "$(call get_package_value,helm.version)" == "null" ]]; then \
 		$(MAKE) \
-						FOLDER=$(FOLDER) \
-						NAME=$(call get_package_value,helm.name) \
-						CHART=$(call get_package_value,helm.chart) \
-						NAMESPACE=$(call get_package_value,namespace) \
-						SUBFOLDER=01-helm \
-						install-helm-chart-url; \
+			FOLDER=$(FOLDER) \
+			NAME=$(call get_package_value,helm.name) \
+			CHART=$(call get_package_value,helm.chart) \
+			NAMESPACE=$(call get_package_value,namespace) \
+			SUBFOLDER=01-helm \
+			install-helm-chart-url; \
 	else \
 		$(MAKE) \
-						FOLDER=$(FOLDER) \
-						NAME=$(call get_package_value,helm.name) \
-						CHART=$(call get_package_value,helm.chart) \
-						VERSION=$(call get_package_value,helm.version) \
-						NAMESPACE=$(call get_package_value,namespace) \
-						SUBFOLDER=01-helm \
-						install-helm-chart; \
+			FOLDER=$(FOLDER) \
+			NAME=$(call get_package_value,helm.name) \
+			CHART=$(call get_package_value,helm.chart) \
+			VERSION=$(call get_package_value,helm.version) \
+			NAMESPACE=$(call get_package_value,namespace) \
+			SUBFOLDER=01-helm \
+			install-helm-chart; \
 	fi
 endif
 ifneq ($(wildcard $(FOLDER)/02-manifests/.*),)
