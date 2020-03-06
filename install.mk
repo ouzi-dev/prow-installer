@@ -10,9 +10,9 @@ $(error Requires bash version $(BASH_MIN_MAJOR_VERSION) and above)
 endif
 
 # We need helm version 3 and above
-HELM_MIN_MAJOR_ERSION = 3
-ifeq ($(shell test $(shell helm version --short | cut -d'+' -f1 | tr -d v | cut -d'.' -f1) -lt $(HELM_MIN_MAJOR_ERSION); echo $$?),0)
-$(error Requires helm version $(HELM_MIN_MAJOR_ERSION) and above)
+HELM_MIN_MAJOR_VERSION = 3
+ifeq ($(shell test $(shell helm version --short | cut -d'+' -f1 | tr -d v | cut -d'.' -f1) -lt $(HELM_MIN_MAJOR_VERSION); echo $$?),0)
+$(error Requires helm version $(HELM_MIN_MAJOR_VERSION) and above)
 endif
 
 # We need yq version 3 and above
