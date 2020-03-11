@@ -106,7 +106,8 @@ buildsecrets:
           key: github_bot_personal_access_token_prow
           table: credential-store
           version: "0000000000000000001"
-    - name: ouzi-bot-dockerconfig # needs to be applied manually as the credstash controller only creates a Opaque type secret unfortunately
+    - name: ouzi-bot-dockerconfig
+      type: kubernetes.io/dockerconfigjson
       keys:
         - name: .dockerconfigjson
           key: quay_bot_dockerconfig
