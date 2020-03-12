@@ -1,3 +1,0 @@
-gkepreemptiblekiller:
-  namespace: gke-preemptible-killer
-  image: estafette/estafette-gke-preemptible-killer:1.1.21
