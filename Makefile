@@ -1,6 +1,5 @@
 include install.mk
 
-DRY_RUN ?= true
 DIRECTORY = $(notdir $(sort $(wildcard packages/*)))
 VALUES ?= values.yaml
 
@@ -19,13 +18,21 @@ init:
 	helm repo add estafette https://helm.estafette.io
 	helm repo update
 
-.PHONY: all-deploy
+.PHONY: deploy
 deploy: $(addsuffix -deploy,$($*DIRECTORY:/=))
 
 .PHONY: %-deploy
 %-deploy:
 	@echo "*Deploying package $*"
 	@$(MAKE) FOLDER=packages/$* VALUES=$(VALUES) SET_VALUES=$(SET_VALUES) install
+
+.PHONY: validate
+validate: $(addsuffix -validate,$($*DIRECTORY:/=))
+
+.PHONY: %-validate
+%-validate:
+	@echo "*Validating package $*"
+	@$(MAKE) VALIDATE=true DRY_RUN= FOLDER=packages/$* VALUES=$(VALUES) SET_VALUES=$(SET_VALUES) install
 
 package: 
 	@echo Creating package...

@@ -15,26 +15,26 @@ certmanager:
   svcaccount:
     credstash:
       key: prow-cert-manager-svc-account-key
-      table: credential-store
-      version: "0000000000000000001"
+      # table: credential-store
+      # version: "0000000000000000001"
 
 # Oauth2 Proxy Settings
 oauthproxy:
   clientid:
     credstash:
       key: prow-cluster-github-oauth-client-id
-      table: credential-store
-      version: "0000000000000000001"
+      # table: credential-store
+      # version: "0000000000000000001"
   clientsecret:
     credstash:
       key: prow-cluster-github-oauth-client-secret
-      table: credential-store
-      version: "0000000000000000001"    
+      # table: credential-store
+      # version: "0000000000000000001"    
   cookiesecret:
     credstash:
       key: prow-cluster-github-oauth-cookie-secret
-      table: credential-store
-      version: "0000000000000000001"
+      # table: credential-store
+      # version: "0000000000000000001"
 
 # Credstash Operator that will allow you to fetch secrets from Credstash
 credstashoperator:
@@ -42,7 +42,7 @@ credstashoperator:
     system:
       aws:
         region: eu-west-2
-        accessid: 1234567890
+        accessid: "1234567890"
         secretaccesskey: topsecret
 
 # GKE PreEmptible Killer Settings
@@ -50,8 +50,8 @@ gkepreemptiblekiller:
   svcaccount:
     credstash:
       key: prow-gke-preemptible-killer-svc-account-key
-      table: credential-store
-      version: "0000000000000000001"
+      # table: credential-store
+      # version: "0000000000000000001"
 
 # Prow Settings
 prow:
@@ -60,30 +60,30 @@ prow:
     svcaccount:
       credstash:
         key: prow-bucket-svc-account-key
-        table: credential-store
-        version: "0000000000000000001"
+        # table: credential-store
+        # version: "0000000000000000001"
   slack:
     token:
       credstash:
         key: ouzibot_slack_legacytoken
-        table: credential-store
-        version: "0000000000000000001"
+        # table: credential-store
+        # version: "0000000000000000001"
   github:
     token:
       credstash:
         key: github_bot_personal_access_token_prow
-        table: credential-store
-        version: "0000000000000000001"
+        # table: credential-store
+        # version: "0000000000000000001"
     sshkey:
       credstash:
         key: github_bot_ssh_private_key
-        table: credential-store
-        version: "0000000000000000001"
+        # table: credential-store
+        # version: "0000000000000000001"
     oauthconfig:
       credstash:
         key: prow-oauth-config
-        table: credential-store
-        version: "0000000000000000001"
+        # table: credential-store
+        # version: "0000000000000000001"
 
 # Build Secrets
 buildsecrets:
@@ -92,34 +92,34 @@ buildsecrets:
       keys:
         - name: service-account.json
           key: prow-bucket-svc-account-key
-          table: credential-store
-          version: "0000000000000000001"
+          # table: credential-store
+          # version: "0000000000000000001"
     - name: github-ssh-key
       keys:
         - name: key
           key: github_bot_ssh_private_key
-          table: credential-store
-          version: "0000000000000000001"
+          # table: credential-store
+          # version: "0000000000000000001"
     - name: github-token
       keys:
         - name: oauth
           key: github_bot_personal_access_token_prow
-          table: credential-store
-          version: "0000000000000000001"
+          # table: credential-store
+          # version: "0000000000000000001"
     - name: ouzi-bot-dockerconfig
       type: kubernetes.io/dockerconfigjson
       keys:
         - name: .dockerconfigjson
           key: quay_bot_dockerconfig
-          table: credential-store
-          version: "0000000000000000001"
+          # table: credential-store
+          # version: "0000000000000000001"
     - name: aws-ouzi-creds
       keys:
       - name: access_key_id
         key: prow-aws-access-key-id
-        table: credential-store
-        version: "0000000000000000001"
+        # table: credential-store
+        # version: "0000000000000000001"
       - name: secret_access_key
         key: prow-aws-secret-access-key
-        table: credential-store
-        version: "0000000000000000001"
+        # table: credential-store
+        # version: "0000000000000000001"

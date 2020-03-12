@@ -1,7 +1,11 @@
-DRY_RUN ?= true
-VALUES ?= values.yaml
-
 SHELL = /usr/bin/env bash -eo pipefail
+
+DRY_RUN ?= false
+VALIDATE ?= false
+
+KUBEVAL_OPTS ?= --strict --kubernetes-version 1.16.0 --ignore-missing-schemas
+
+VALUES ?= values.yaml
 
 # We need bash version 5 and above
 BASH_MIN_MAJOR_VERSION = 5
@@ -63,6 +67,17 @@ install-manifests-gotpl:
 	--values $(VALUES) \
 	$(SET_VALUES) \
 	--strict > $(FOLDER)/.values.yaml
+ifeq ($(VALIDATE),true)
+	@echo **Validating $(FOLDER)/${SUBFOLDER} \(kubeval\)
+	@gotpl \
+		$(FOLDER)/${SUBFOLDER} \
+		--values $(VALUES) \
+		--values $(FOLDER)/.values.yaml \
+		$(SET_VALUES) \
+		--strict \
+		$(EXTRA_ARGS) \
+		| kubeval $(KUBEVAL_OPTS)
+endif
 ifeq ($(DRY_RUN),true)
 	@echo **Applying $(FOLDER)/${SUBFOLDER} \(Dry Run\)
 	@gotpl \
@@ -73,7 +88,7 @@ ifeq ($(DRY_RUN),true)
 		--strict \
 		$(EXTRA_ARGS) \
 		| kubectl apply --dry-run $(KUBECTL_ARGS) -f -
-else
+else ifeq ($(DRY_RUN),false)
 	@echo **Applying $(FOLDER)/${SUBFOLDER}
 	@gotpl \
 		$(FOLDER)/${SUBFOLDER} \
@@ -84,7 +99,7 @@ else
 		$(EXTRA_ARGS) \
 		| kubectl apply $(KUBECTL_ARGS) -f -
 endif
-	@rm $(FOLDER)/.values.yaml
+	# @rm $(FOLDER)/.values.yaml
 
 .PHONY: install-helm-chart
 install-helm-chart:
@@ -94,6 +109,18 @@ install-helm-chart:
 	--values $(FOLDER)/values.yaml \
 	$(SET_VALUES) \
 	--strict > $(FOLDER)/${SUBFOLDER}/.values.yaml
+ifeq ($(VALIDATE),true)
+	@echo **Validating helm chart $(CHART) $(NAME) $(VERSION) from $(FOLDER)/$(SUBFOLDER) in $(NAMESPACE)
+	@helm template \
+		$(NAME) \
+		$(CHART) \
+		--version $(VERSION) \
+		--no-hooks \
+		--namespace $(NAMESPACE) \
+		$(SET_VALUES) \
+		--values $(FOLDER)/$(SUBFOLDER)/.values.yaml \
+		| kubeval $(KUBEVAL_OPTS)	
+endif
 ifeq ($(DRY_RUN),true)
 	@echo **Upgrading \(Dry Run\) helm chart $(CHART) $(NAME) $(VERSION) from $(FOLDER)/$(SUBFOLDER) in $(NAMESPACE)
 	@helm diff upgrade \
@@ -106,7 +133,7 @@ ifeq ($(DRY_RUN),true)
 		$(HELM_EXTRA_ARGS) \
 		$(SET_VALUES) \
 		--values $(FOLDER)/$(SUBFOLDER)/.values.yaml
-else
+else ifeq ($(DRY_RUN),false)
 	@echo **Upgrading helm chart $(CHART) $(NAME) $(VERSION) from $(FOLDER)/$(SUBFOLDER) in $(NAMESPACE)
 	@helm upgrade \
 		$(NAME) \
@@ -119,7 +146,7 @@ else
 		$(SET_VALUES) \
 		--values $(FOLDER)/$(SUBFOLDER)/.values.yaml
 endif
-	@rm $(FOLDER)/$(SUBFOLDER)/.values.yaml
+	# @rm $(FOLDER)/$(SUBFOLDER)/.values.yaml
 
 .PHONY: install-helm-chart-url
 install-helm-chart-url:
@@ -129,6 +156,18 @@ install-helm-chart-url:
 	--values $(FOLDER)/values.yaml \
 	$(SET_VALUES) \
 	--strict > $(FOLDER)/${SUBFOLDER}/.values.yaml
+ifeq ($(VALIDATE),true)
+	@echo **Validating helm chart $(CHART) $(NAME) $(VERSION) from $(FOLDER)/$(SUBFOLDER) in $(NAMESPACE)
+	@helm template \
+		$(NAME) \
+		$(CHART) \
+		--no-hooks \
+		--namespace $(NAMESPACE) \
+		$(HELM_EXTRA_ARGS) \
+		$(SET_VALUES) \
+		--values $(FOLDER)/$(SUBFOLDER)/.values.yaml	\
+		| kubeval $(KUBEVAL_OPTS)	
+endif
 ifeq ($(DRY_RUN),true)
 	@echo **Upgrading \(Dry Run\) helm chart $(CHART) $(NAME) $(VERSION) from $(FOLDER)/$(SUBFOLDER) in $(NAMESPACE)
 	@helm diff upgrade \
@@ -140,7 +179,7 @@ ifeq ($(DRY_RUN),true)
 		$(HELM_EXTRA_ARGS) \
 		$(SET_VALUES) \
 		--values $(FOLDER)/$(SUBFOLDER)/.values.yaml 		
-else
+else ifeq ($(DRY_RUN),false)
 	@echo **Upgrading helm chart $(CHART) $(NAME) $(VERSION) from $(FOLDER)/$(SUBFOLDER) in $(NAMESPACE)
 	@helm upgrade \
 		$(NAME) \
@@ -152,7 +191,7 @@ else
 		$(SET_VALUES) \
 		--values $(FOLDER)/$(SUBFOLDER)/.values.yaml 	
 endif
-	@rm $(FOLDER)/$(SUBFOLDER)/.values.yaml 
+	# @rm $(FOLDER)/$(SUBFOLDER)/.values.yaml 
 
 
 

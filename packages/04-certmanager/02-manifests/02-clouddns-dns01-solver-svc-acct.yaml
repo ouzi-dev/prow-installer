@@ -10,5 +10,9 @@ spec:
   secrets:
   - name: key.json
     key: {{ .certmanager.svcaccount.credstash.key | quote }}
+{{- if hasKey .certmanager.svcaccount.credstash "table" }}
     table: {{ .certmanager.svcaccount.credstash.table | quote }}
+{{- end }}
+{{- if hasKey .certmanager.svcaccount.credstash "version" }}
     version: {{ .certmanager.svcaccount.credstash.version | quote }}
+{{- end }}
