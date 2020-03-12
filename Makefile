@@ -32,7 +32,7 @@ validate: $(addsuffix -validate,$($*DIRECTORY:/=))
 .PHONY: %-validate
 %-validate:
 	@echo "*Validating package $*"
-	@$(MAKE) VALIDATE=true FOLDER=packages/$* VALUES=$(VALUES) SET_VALUES=$(SET_VALUES) install
+	@$(MAKE) VALIDATE=true DRY_RUN= FOLDER=packages/$* VALUES=$(VALUES) SET_VALUES=$(SET_VALUES) install
 
 package: 
 	@echo Creating package...
