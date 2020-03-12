@@ -1,0 +1,2 @@
+bootstrap:
+  namespace: kube-system

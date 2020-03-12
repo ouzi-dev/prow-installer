@@ -1,4 +1,22 @@
 presubmits:
+  - name: validate
+    context: validate
+    decorate: true
+    always_run: true
+    skip_report: false
+    clone_uri: "git@github.com:ouzi-dev/prow-installer.git"
+    max_concurrency: 1
+    trigger: "(?m)validate( please)?"
+    rerun_command: "validate"
+    spec:
+      containers:
+        - name: "validate"
+          imagePullPolicy: IfNotPresent
+          image: quay.io/ouzi/toolbox:0.1.1
+          command:
+            - make
+          args:
+            - validate
   - name: test-package
     context: test-package
     decorate: true
@@ -12,7 +30,7 @@ presubmits:
       containers:
         - name: "test-package"
           imagePullPolicy: IfNotPresent
-          image: quay.io/ouzi/toolbox:0.1.13
+          image: quay.io/ouzi/toolbox:0.1.17
           command:
             - make
           args:
@@ -32,7 +50,7 @@ presubmits:
       containers:
         - name: "test-semrelease-dryrun"
           imagePullPolicy: IfNotPresent
-          image: quay.io/ouzi/toolbox:0.1.2
+          image: quay.io/ouzi/toolbox:0.1.17
           command:
             - make
           args:
@@ -50,7 +68,7 @@ postsubmits:
       containers:
         - name: "release"
           imagePullPolicy: Always
-          image: quay.io/ouzi/toolbox:0.1.13
+          image: quay.io/ouzi/toolbox:0.1.17
           command:
             - make
           args:

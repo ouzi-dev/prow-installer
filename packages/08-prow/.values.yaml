@@ -1,0 +1,10 @@
+prow:
+  namespace: prow
+  namespaceforjobs: prow-test-pods
+  helm:
+    # The name of the Release
+    name: raspberry
+    # The chart's name - can also be a URL
+    chart: https://github.com/ouzi-dev/prow-helm-chart/releases/download/v0.6.8/prow-v0.6.8.tgz 
+    # If using a registry, specify the version. If the chart is a URL, set the version to null
+    version: null

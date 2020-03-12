@@ -1,0 +1,8 @@
+provider: google
+google:
+  project: ouzidev-testinfra-252513
+replicas: 1
+metrics:
+  enabled: true
+policy: sync
+

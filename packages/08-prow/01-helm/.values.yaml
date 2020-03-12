@@ -1,0 +1,32 @@
+prowbucketname: ouzidev-testinfra-252513-prow-artefacts
+podNamespace: prow-test-pods
+secrets: 
+  slackToken: slack-token
+  githubToken: github-token
+  oauthConfig: oauth-config
+  bucketGcsCredentials: prow-bucket-gcs-credentials
+
+deck:
+  ingress:
+    host: prow.test-infra.ouzi.io
+    annotations:
+      nginx.ingress.kubernetes.io/auth-url: "https://oauth2.test-infra.ouzi.io/oauth2/auth"
+      nginx.ingress.kubernetes.io/auth-signin: "https://oauth2.test-infra.ouzi.io/oauth2/start?rd=/redirect/$http_host$request_uri"
+
+hook:
+  ingress:
+    host: prow.test-infra.ouzi.io
+
+github:
+  org: ouzi-dev
+  bot:
+    username: ouzibot
+
+ghproxy:
+  cache:
+    sizeGB: 19
+    storageClassName: ssd-retain
+
+monitoring:
+  enabled: true 
+
