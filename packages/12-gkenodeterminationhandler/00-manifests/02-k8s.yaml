@@ -33,6 +33,11 @@ spec:
       # Necessary to reboot node
       hostPID: true
       serviceAccountName: node-termination-handler
+      tolerations:
+        - key: cloud.google.com/gke-preemptible
+          operator: Equal
+          value: "true"
+          effect: NoSchedule
       affinity:
         nodeAffinity:
          # Restrict to GPU nodes or preemptible nodes

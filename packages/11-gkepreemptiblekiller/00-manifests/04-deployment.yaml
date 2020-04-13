@@ -16,6 +16,11 @@ spec:
     spec:
       serviceAccountName: preemptible-killer
       terminationGracePeriodSeconds: 300
+      tolerations:
+        - key: cloud.google.com/gke-preemptible
+          operator: Equal
+          value: "true"
+          effect: NoSchedule
       containers:
       - name: preemptible-killer
         image: {{ .gkepreemptiblekiller.image }}
