@@ -21,6 +21,11 @@ spec:
         operatorInstance: {{ $key }}
     spec:
       serviceAccountName: credstash-operator
+      tolerations:
+        - key: cloud.google.com/gke-preemptible
+          operator: Equal
+          value: "true"
+          effect: NoSchedule
       containers:
         - name: credstash-operator
           image: {{ $root.credstashoperator.image }}

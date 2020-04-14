@@ -1,0 +1,19 @@
+tolerations: 
+  - key: cloud.google.com/gke-preemptible
+    operator: Equal
+    value: "true"
+    effect: NoSchedule
+
+webhook:
+  tolerations:
+    - key: cloud.google.com/gke-preemptible
+      operator: Equal
+      value: "true"
+      effect: NoSchedule
+
+cainjector:
+  tolerations: 
+    - key: cloud.google.com/gke-preemptible
+      operator: Equal
+      value: "true"
+      effect: NoSchedule

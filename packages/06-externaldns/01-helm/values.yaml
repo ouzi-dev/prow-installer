@@ -5,3 +5,8 @@ replicas: 1
 metrics:
   enabled: true
 policy: sync
+tolerations:
+  - key: cloud.google.com/gke-preemptible
+    operator: Equal
+    value: "true"
+    effect: NoSchedule

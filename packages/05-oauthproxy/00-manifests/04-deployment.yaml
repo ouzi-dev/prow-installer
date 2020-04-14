@@ -16,6 +16,11 @@ spec:
       labels:
         k8s-app: oauth2-proxy
     spec:
+      tolerations:
+        - key: cloud.google.com/gke-preemptible
+          operator: Equal
+          value: "true"
+          effect: NoSchedule
       volumes:
         - name: nginx
           configMap:
