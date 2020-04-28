@@ -16,6 +16,7 @@ init:
 	helm repo add stable https://kubernetes-charts.storage.googleapis.com/
 	helm repo add jetstack https://charts.jetstack.io
 	helm repo add estafette https://helm.estafette.io
+	helm repo add bitnami https://charts.bitnami.com/bitnami
 	helm repo update
 
 .PHONY: deploy
