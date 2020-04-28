@@ -6,4 +6,4 @@ externaldns:
     # The chart's name - can also be a URL
     chart: stable/external-dns
     # If using a registry, specify the version. If the chart is a URL, set the version to null
-    version: 2.19.2
+    version: 2.20.4
