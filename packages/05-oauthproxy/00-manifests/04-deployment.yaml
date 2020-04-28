@@ -58,6 +58,7 @@ spec:
           - --upstream=http://localhost/redirect/
           - --http-address=0.0.0.0:4180
           - --cookie-domain=.{{ .global.basedomain }}
+          - --reverse-proxy=true
           - --footer=-
           # Register a new application
           # https://github.com/settings/applications/new

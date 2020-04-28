@@ -6,4 +6,4 @@ nginxingress:
     # The chart's name - can also be a URL
     chart: stable/nginx-ingress
     # If using a registry, specify the version. If the chart is a URL, set the version to null
-    version: 1.33.4
+    version: 1.36.3
