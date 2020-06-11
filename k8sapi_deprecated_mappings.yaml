@@ -1,0 +1,13 @@
+mappings:
+  - deprecatedAPI: "apiVersion: extensions/v1beta1\nkind: Deployment"
+    newAPI: "apiVersion: apps/v1\nkind: Deployment"
+    deprecatedInVersion: "v1.9"
+    removedInVersion: "v1.16"
+  - deprecatedAPI: "apiVersion: apps/v1beta1\nkind: Deployment"
+    newAPI: "apiVersion: apps/v1\nkind: Deployment"
+    deprecatedInVersion: "v1.9"
+    removedInVersion: "v1.16"
+  - deprecatedAPI: "apiVersion: apps/v1beta2\nkind: Deployment"
+    newAPI: "apiVersion: apps/v1\nkind: Deployment"
+    deprecatedInVersion: "v1.9"
+    removedInVersion: "v1.16"

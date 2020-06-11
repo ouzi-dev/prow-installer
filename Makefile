@@ -13,6 +13,8 @@ HELM_PLUGIN_DIFF_VERSION := v3.0.0-rc.7
 .PHONY: init
 init: 
 	helm plugin install $(HELM_PLUGIN_DIFF_URL) --version $(HELM_PLUGIN_DIFF_VERSION) || echo "Plugin already installed - nothing to do"
+# plugin to handle deprecated apis
+	helm plugin install https://github.com/hickeyma/helm-mapkubeapis || echo "Plugin already installed - nothing to do"
 	helm repo add stable https://kubernetes-charts.storage.googleapis.com/
 	helm repo add jetstack https://charts.jetstack.io
 	helm repo add estafette https://helm.estafette.io
@@ -38,7 +40,7 @@ validate: $(addsuffix -validate,$($*DIRECTORY:/=))
 package: 
 	@echo Creating package...
 	@mkdir -p $(DIST_DIR)
-	@tar -zcf $(RELEASE) packages/ Makefile install.mk LICENSE
+	@tar -zcf $(RELEASE) packages/ Makefile install.mk k8sapi_deprecated_mappings.yaml LICENSE 
 	@echo Creating package...Done $(RELEASE)
 
 .PHONY: semantic-release
