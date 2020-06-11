@@ -6,6 +6,8 @@ VALIDATE ?= false
 KUBEVAL_OPTS ?= --strict --kubernetes-version 1.16.0 --ignore-missing-schemas
 
 VALUES ?= values.yaml
+K8SAPI_DEPRECATED_MAPPINGS ?= k8sapi_deprecated_mappings.yaml
+
 
 # We need bash version 5 and above
 BASH_MIN_MAJOR_VERSION = 5
@@ -122,6 +124,8 @@ ifeq ($(VALIDATE),true)
 		| kubeval $(KUBEVAL_OPTS)	
 endif
 ifeq ($(DRY_RUN),true)
+	@echo **Migrating \(Dry Run\) deprecated or removed Kubernetes APIs in Helm storage
+	@helm mapkubeapis --namespace $(NAMESPACE) --mapfile $(K8SAPI_DEPRECATED_MAPPINGS) --dry-run $(NAME)
 	@echo **Upgrading \(Dry Run\) helm chart $(CHART) $(NAME) $(VERSION) from $(FOLDER)/$(SUBFOLDER) in $(NAMESPACE)
 	@helm diff upgrade \
 		$(NAME) \
@@ -134,6 +138,8 @@ ifeq ($(DRY_RUN),true)
 		$(SET_VALUES) \
 		--values $(FOLDER)/$(SUBFOLDER)/.values.yaml
 else ifeq ($(DRY_RUN),false)
+	@echo **Migrating deprecated or removed Kubernetes APIs in Helm storage
+	@helm mapkubeapis --namespace $(NAMESPACE) --mapfile $(K8SAPI_DEPRECATED_MAPPINGS) $(NAME)
 	@echo **Upgrading helm chart $(CHART) $(NAME) $(VERSION) from $(FOLDER)/$(SUBFOLDER) in $(NAMESPACE)
 	@helm upgrade \
 		$(NAME) \
@@ -169,6 +175,8 @@ ifeq ($(VALIDATE),true)
 		| kubeval $(KUBEVAL_OPTS)	
 endif
 ifeq ($(DRY_RUN),true)
+	@echo **Migrating \(Dry Run\) deprecated or removed Kubernetes APIs in Helm storage
+	@helm mapkubeapis --namespace $(NAMESPACE) --mapfile $(K8SAPI_DEPRECATED_MAPPINGS) --dry-run $(NAME)
 	@echo **Upgrading \(Dry Run\) helm chart $(CHART) $(NAME) $(VERSION) from $(FOLDER)/$(SUBFOLDER) in $(NAMESPACE)
 	@helm diff upgrade \
 		$(NAME) \
@@ -180,6 +188,8 @@ ifeq ($(DRY_RUN),true)
 		$(SET_VALUES) \
 		--values $(FOLDER)/$(SUBFOLDER)/.values.yaml 		
 else ifeq ($(DRY_RUN),false)
+	@echo **Migrating deprecated or removed Kubernetes APIs in Helm storage
+	@helm mapkubeapis --namespace $(NAMESPACE) --mapfile $(K8SAPI_DEPRECATED_MAPPINGS) $(NAME)
 	@echo **Upgrading helm chart $(CHART) $(NAME) $(VERSION) from $(FOLDER)/$(SUBFOLDER) in $(NAMESPACE)
 	@helm upgrade \
 		$(NAME) \
