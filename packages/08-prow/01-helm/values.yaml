@@ -30,3 +30,6 @@ ghproxy:
 
 monitoring:
   enabled: true 
+
+needsRetitle:
+  enabled: true
