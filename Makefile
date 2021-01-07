@@ -15,7 +15,7 @@ init:
 	helm plugin install $(HELM_PLUGIN_DIFF_URL) --version $(HELM_PLUGIN_DIFF_VERSION) || echo "Plugin already installed - nothing to do"
 # plugin to handle deprecated apis
 	helm plugin install https://github.com/hickeyma/helm-mapkubeapis || echo "Plugin already installed - nothing to do"
-	helm repo add stable https://kubernetes-charts.storage.googleapis.com/
+	helm repo add stable https://charts.helm.sh/stable
 	helm repo add jetstack https://charts.jetstack.io
 	helm repo add estafette https://helm.estafette.io
 	helm repo add bitnami https://charts.bitnami.com/bitnami
