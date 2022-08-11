@@ -8,17 +8,22 @@ DIST_VERSION ?= canary
 RELEASE = $(DIST_DIR)/prow-installer-$(DIST_VERSION).tar.gz
 
 HELM_PLUGIN_DIFF_URL := https://github.com/databus23/helm-diff
-HELM_PLUGIN_DIFF_VERSION := v3.0.0-rc.7
+HELM_PLUGIN_DIFF_VERSION := v3.5.0
+
+HELM_PLUGIN_MAP_KUBE_APIS_URL := https://github.com/helm/helm-mapkubeapis
+HELM_PLUGIN_MAP_KUBE_APIS_VERSION := v0.3.0
 
 .PHONY: init
 init: 
 	helm plugin install $(HELM_PLUGIN_DIFF_URL) --version $(HELM_PLUGIN_DIFF_VERSION) || echo "Plugin already installed - nothing to do"
+	helm plugin install $(HELM_PLUGIN_MAP_KUBE_APIS_URL) --version $(HELM_PLUGIN_MAP_KUBE_APIS_VERSION) || echo "Plugin already installed - nothing to do"
 # plugin to handle deprecated apis
 	helm plugin install https://github.com/hickeyma/helm-mapkubeapis || echo "Plugin already installed - nothing to do"
 	helm repo add stable https://charts.helm.sh/stable
 	helm repo add jetstack https://charts.jetstack.io
 	helm repo add estafette https://helm.estafette.io
 	helm repo add bitnami https://charts.bitnami.com/bitnami
+	helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
 	helm repo update
 
 .PHONY: deploy
