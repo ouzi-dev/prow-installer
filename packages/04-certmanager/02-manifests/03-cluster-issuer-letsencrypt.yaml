@@ -1,5 +1,5 @@
 ---
-apiVersion: cert-manager.io/v1alpha2
+apiVersion: cert-manager.io/v1
 kind: ClusterIssuer
 metadata:
   name: letsencrypt-prod
@@ -16,7 +16,7 @@ spec:
     # Add a single challenge solver, HTTP01 using nginx
     solvers:
     - dns01:
-        clouddns:
+        cloudDNS:
           # The ID of the GCP project
           project: {{.global.gcloud.project}}
           # This is the secret used to access the service account

@@ -139,7 +139,7 @@ ifeq ($(DRY_RUN),true)
 		--values $(FOLDER)/$(SUBFOLDER)/.values.yaml
 else ifeq ($(DRY_RUN),false)
 	@echo **Migrating deprecated or removed Kubernetes APIs in Helm storage
-	@helm mapkubeapis --namespace $(NAMESPACE) --mapfile $(K8SAPI_DEPRECATED_MAPPINGS) $(NAME)
+	@helm mapkubeapis --namespace $(NAMESPACE) --mapfile $(K8SAPI_DEPRECATED_MAPPINGS) $(NAME) || true
 	@echo **Upgrading helm chart $(CHART) $(NAME) $(VERSION) from $(FOLDER)/$(SUBFOLDER) in $(NAMESPACE)
 	@helm upgrade \
 		$(NAME) \
@@ -189,7 +189,7 @@ ifeq ($(DRY_RUN),true)
 		--values $(FOLDER)/$(SUBFOLDER)/.values.yaml 		
 else ifeq ($(DRY_RUN),false)
 	@echo **Migrating deprecated or removed Kubernetes APIs in Helm storage
-	@helm mapkubeapis --namespace $(NAMESPACE) --mapfile $(K8SAPI_DEPRECATED_MAPPINGS) $(NAME)
+	@helm mapkubeapis --namespace $(NAMESPACE) --mapfile $(K8SAPI_DEPRECATED_MAPPINGS) $(NAME) || true
 	@echo **Upgrading helm chart $(CHART) $(NAME) $(VERSION) from $(FOLDER)/$(SUBFOLDER) in $(NAMESPACE)
 	@helm upgrade \
 		$(NAME) \
