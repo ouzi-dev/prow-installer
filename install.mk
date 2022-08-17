@@ -3,7 +3,7 @@ SHELL = /usr/bin/env bash -eo pipefail
 DRY_RUN ?= false
 VALIDATE ?= false
 
-KUBEVAL_OPTS ?= --strict --kubernetes-version 1.16.0 --ignore-missing-schemas
+KUBEVAL_OPTS ?= --strict --kubernetes-version 1.21.0 --ignore-missing-schemas
 
 VALUES ?= values.yaml
 K8SAPI_DEPRECATED_MAPPINGS ?= k8sapi_deprecated_mappings.yaml
