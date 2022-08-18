@@ -12,7 +12,7 @@ presubmits:
       containers:
         - name: "validate"
           imagePullPolicy: IfNotPresent
-          image: quay.io/ouzi/toolbox:0.1.17
+          image: quay.io/ouzi/toolbox:0.2.1
           command:
             - make
           args:
@@ -31,7 +31,7 @@ presubmits:
       containers:
         - name: "test-package"
           imagePullPolicy: IfNotPresent
-          image: quay.io/ouzi/toolbox:0.1.17
+          image: quay.io/ouzi/toolbox:0.2.1
           command:
             - make
           args:
@@ -51,7 +51,7 @@ presubmits:
       containers:
         - name: "test-semrelease-dryrun"
           imagePullPolicy: IfNotPresent
-          image: quay.io/ouzi/toolbox:0.1.17
+          image: quay.io/ouzi/toolbox:0.2.1
           command:
             - make
           args:
@@ -69,7 +69,7 @@ postsubmits:
       containers:
         - name: "release"
           imagePullPolicy: Always
-          image: quay.io/ouzi/toolbox:0.1.17
+          image: quay.io/ouzi/toolbox:0.2.1
           command:
             - make
           args:
