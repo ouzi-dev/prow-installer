@@ -5,7 +5,7 @@ prow:
     # The name of the Release
     name: raspberry
     # The chart's name - can also be a URL
-    chart: https://github.com/ouzi-dev/prow-helm-chart/releases/download/v0.14.0/prow-v0.14.0.tgz
+    chart: https://github.com/ouzi-dev/prow-helm-chart/releases/download/v0.15.0/prow-v0.15.0.tgz
     #chart: ./../../../prow-helm-chart/prow/dist/prow-0.0.0.tgz
     # If using a registry, specify the version. If the chart is a URL, set the version to null
     version: null
