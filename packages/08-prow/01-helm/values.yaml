@@ -7,16 +7,12 @@ secrets: {{ if .prow.slack.token }}
   oauthConfig: oauth-config
   bucketGcsCredentials: prow-bucket-gcs-credentials
 
-deck:
-  ingress:
-    host: prow.{{ .global.basedomain }}
-    annotations:
-      nginx.ingress.kubernetes.io/auth-url: "https://oauth2.{{ .global.basedomain }}/oauth2/auth"
-      nginx.ingress.kubernetes.io/auth-signin: "https://oauth2.{{ .global.basedomain }}/oauth2/start?rd=/redirect/$http_host$request_uri"
-
-hook:
-  ingress:
-    host: prow.{{ .global.basedomain }}
+ingress:
+  ingressClass: nginx
+  host: prow.{{ .global.basedomain }}
+  annotations:
+    nginx.ingress.kubernetes.io/auth-url: "https://oauth2.{{ .global.basedomain }}/oauth2/auth"
+    nginx.ingress.kubernetes.io/auth-signin: "https://oauth2.{{ .global.basedomain }}/oauth2/start?rd=/redirect/$http_host$request_uri"
 
 github:
   org: {{ .global.github.org }}
