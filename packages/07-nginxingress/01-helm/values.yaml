@@ -2,8 +2,16 @@
 ## Ref: https://github.com/kubernetes/ingress/blob/master/controllers/nginx/configuration.md
 ##
 controller:
+  resources:
+    requests:
+      cpu: 100m
+      memory: 128Mi
   autoscaling:
     enabled: true
+    minReplicas: 1
+    maxReplicas: 6
+    targetCPUUtilizationPercentage: 50
+    targetMemoryUtilizationPercentage: 80
   service:
     omitClusterIP: true
     annotations: 
